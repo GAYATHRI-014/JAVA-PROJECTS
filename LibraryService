@@ -1,0 +1,32 @@
+package service;
+
+import model.Book;
+import java.io.*;
+import java.util.*;
+
+public class LibraryService {
+
+    private static final String FILE_NAME = "books.txt";
+
+    public void addBook(Book book) {
+        try (FileWriter fw = new FileWriter(FILE_NAME, true)) {
+            fw.write(book.toString() + "\n");
+            System.out.println("Book Added Successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void viewBooks() {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            System.out.println("\n--- Book List ---");
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                System.out.println("ID: " + data[0] + " | Title: " + data[1] + " | Author: " + data[2]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
